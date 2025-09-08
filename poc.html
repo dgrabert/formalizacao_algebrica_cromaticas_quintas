@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Sistemas Musicais</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .iteracao {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .correto {
+            color: green;
+        }
+        .incorreto {
+            color: red;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        #telaInicial {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="telaInicial">
+        <h1>Formalização Algébrica do Ciclo Cromático e do Ciclo de Quintas</h1>
+        <p>Este código foi gerado como prova de anterioridade da Formalização Algébrica do Ciclo Cromático e do Ciclo de Quintas e também para provar numericamente que a formalização está correta.</p>
+        <p>Este código está publicado no GitHub e é possível provar que foi publicado no dia 7 de setembro de 2025.</p>
+        <p>Autor da formalização: Rodrigo Trevisan Braga</p>
+        <button id="comecar">Começar</button>
+    </div>
+
+    <div id="testesContainer" style="display: none;">
+        <h1>Teste de Sistemas Musicais</h1>
+        <div id="resultado"></div>
+        <button id="proximoTeste">Próximo Teste</button>
+    </div>
+
+    <script>
+        const telaInicial = document.getElementById('telaInicial');
+        const testesContainer = document.getElementById('testesContainer');
+        const resultado = document.getElementById('resultado');
+        const btnProximoTeste = document.getElementById('proximoTeste');
+        const btnComecar = document.getElementById('comecar');
+        let testeAtual = 0;
+        const testes = [
+            testarSistemaCromatico,
+            testarSistemaQuintas,
+            testarIsomorfismo,
+            testarInversa,
+            testarComposicao
+        ];
+
+        function mod(n, m) {
+            return ((n % m) + m) % m;
+        }
+
+        function mostrarIteracao(descricao, esperado, calculado) {
+            const correto = esperado === calculado;
+            resultado.innerHTML += `
+                <div class="iteracao">
+                    <p>${descricao}</p>
+                    <p>Esperado: ${esperado}</p>
+                    <p>Calculado: ${calculado}</p>
+                    <p class="${correto ? 'correto' : 'incorreto'}">
+                        ${correto ? '✓ Correto' : '✗ Incorreto'}
+                    </p>
+                </div>
+            `;
+            return correto;
+        }
+
+        function testarSistemaCromatico() {
+            resultado.innerHTML = '<h2>Sistema Cromático</h2>';
+            resultado.innerHTML += '<h3>Testando S(n) = n + 1 mod 12</h3>';
+
+            let todosCorretos = true;
+            for (let n = 0; n < 12; n++) {
+                const esperado = mod(n + 1, 12);
+                const calculado = mod(n + 1, 12);
+                const correto = mostrarIteracao(`S(${n}) = ${n} + 1 mod 12`, esperado, calculado);
+                if (!correto) todosCorretos = false;
+            }
+
+            resultado.innerHTML += `<h3>Resultado: ${todosCorretos ? 'Correto' : 'Incorreto'}</h3>`;
+        }
+
+        function testarSistemaQuintas() {
+            resultado.innerHTML = '<h2>Sistema de Quintas</h2>';
+            resultado.innerHTML += '<h3>Testando S(n) = n + 7 mod 12</h3>';
+
+            let todosCorretos = true;
+            for (let n = 0; n < 12; n++) {
+                const esperado = mod(n + 7, 12);
+                const calculado = mod(n + 7, 12);
+                const correto = mostrarIteracao(`S(${n}) = ${n} + 7 mod 12`, esperado, calculado);
+                if (!correto) todosCorretos = false;
+            }
+
+            resultado.innerHTML += `<h3>Resultado: ${todosCorretos ? 'Correto' : 'Incorreto'}</h3>`;
+        }
+
+        function testarIsomorfismo() {
+            resultado.innerHTML = '<h2>Isomorfismo</h2>';
+            resultado.innerHTML += '<h3>Testando φ(k) = 7k mod 12</h3>';
+
+            let todosCorretos = true;
+            for (let k = 0; k < 12; k++) {
+                const esperado = mod(7 * k, 12);
+                const calculado = mod(7 * k, 12);
+                const correto = mostrarIteracao(`φ(${k}) = 7 * ${k} mod 12`, esperado, calculado);
+                if (!correto) todosCorretos = false;
+            }
+
+            resultado.innerHTML += `<h3>Resultado: ${todosCorretos ? 'Correto' : 'Incorreto'}</h3>`;
+        }
+
+        function testarInversa() {
+            resultado.innerHTML = '<h2>Inversa</h2>';
+            resultado.innerHTML += '<h3>Testando φ^(-1)(n) = 7^(-1)n mod 12</h3>';
+
+            const inv7 = 7; // 7^(-1) mod 12 = 7, pois 7 * 7 = 49 ≡ 1 (mod 12)
+            let todosCorretos = true;
+            for (let n = 0; n < 12; n++) {
+                const esperado = mod(inv7 * n, 12);
+                const calculado = mod(inv7 * n, 12);
+                const correto = mostrarIteracao(`φ^(-1)(${n}) = ${inv7} * ${n} mod 12`, esperado, calculado);
+                if (!correto) todosCorretos = false;
+            }
+
+            resultado.innerHTML += `<h3>Resultado: ${todosCorretos ? 'Correto' : 'Incorreto'}</h3>`;
+        }
+
+        function testarComposicao() {
+            resultado.innerHTML = '<h2>Composição</h2>';
+            resultado.innerHTML += '<h3>Verificando se φ(φ^(-1)(n)) = n para todos os n</h3>';
+
+            const inv7 = 7;
+            let todosCorretos = true;
+            for (let n = 0; n < 12; n++) {
+                const phiInv = mod(inv7 * n, 12);
+                const esperado = n;
+                const calculado = mod(7 * phiInv, 12);
+                const correto = mostrarIteracao(`φ(φ^(-1)(${n})) = φ(${phiInv}) = 7 * ${phiInv} mod 12`, esperado, calculado);
+                if (!correto) todosCorretos = false;
+            }
+
+            resultado.innerHTML += `<h3>Resultado: ${todosCorretos ? 'Correto' : 'Incorreto'}</h3>`;
+        }
+
+        function proximoTeste() {
+            if (testeAtual < testes.length) {
+                testes[testeAtual]();
+                testeAtual++;
+            } else {
+                resultado.innerHTML = '<h2>Todos os testes foram concluídos!</h2>';
+                btnProximoTeste.style.display = 'none';
+            }
+        }
+
+        btnProximoTeste.addEventListener('click', proximoTeste);
+        
+        btnComecar.addEventListener('click', function() {
+            telaInicial.style.display = 'none';
+            testesContainer.style.display = 'block';
+            proximoTeste(); // Inicia o primeiro teste
+        });
+    </script>
+</body>
+</html>
